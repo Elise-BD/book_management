@@ -13,7 +13,7 @@ public class Bibliotheque {
     User currentUser;
 
 
-    public void menu(){
+    public String menu(){
         System.out.println("- Welcome to the library's book management system -");
         System.out.println("(1) Get list of available books");
         System.out.println("(2) Borrow a book");
@@ -23,6 +23,8 @@ public class Bibliotheque {
         System.out.println("(6) Admin/ Modify a book's information");
         System.out.println("(7) Admin/ Delete a book");
         System.out.println("(8) Quit");
+
+        return sc.nextLine();
     }
     public boolean login(){
 
@@ -37,9 +39,6 @@ public class Bibliotheque {
                 if (Objects.equals(login, u.getLogin())) {
                     currentUser = u;
                     loginOK = true;
-                    break;
-                } else {
-                    System.out.println("Login does not exist !");
                     break;
                 }
             }
@@ -56,12 +55,65 @@ public class Bibliotheque {
                         System.out.println("Incorrect password !");
                     }
                 }
-            }
+            } else {System.out.println("Login does not exist !");}
         }
         return false;
     }
 
-    public void addBook(Book b){
+    public boolean isAdmin(){
+        return Objects.equals(String.valueOf(currentUser.getRole()), "ADMIN");
+    }
+    public Book defineBook(){
+        System.out.println("Which book would you like to borrow ? Enter book ID :");
+        String input = sc.nextLine();
+        for (Book b : availableBooks) {
+            if(Objects.equals(input, b.toString())){
+                return b;
+            }
+        }
+        System.out.println("Wrong input for book ID !");
+        return null;
+    }
+    public void addBook(){
+
+        String title = null;
+        String author = null;
+        int publicationYear = 0;
+        String ISBN = null;
+
+        System.out.println("Set title? (Y)es or (N)o");
+        String input = sc.nextLine().toUpperCase();
+        if(Objects.equals(input, "Y")){
+            System.out.println("Enter title :");
+            input = sc.nextLine();
+            title = input;
+        }
+
+        System.out.println("Set author? (Y)es or (N)o");
+        input = sc.nextLine().toUpperCase();
+        if(Objects.equals(input, "Y")){
+            System.out.println("Enter author :");
+            input = sc.nextLine();
+            author = input;
+        }
+
+        System.out.println("Set publication year? (Y)es or (N)o");
+        input = sc.nextLine().toUpperCase();
+        if(Objects.equals(input, "Y")){
+            System.out.println("Enter publication year :");
+            input = sc.nextLine();
+            publicationYear = Integer.parseInt(input);
+        }
+
+        System.out.println("Set ISBN? (Y)es or (N)o");
+        input = sc.nextLine().toUpperCase();
+        if(Objects.equals(input, "Y")){
+            System.out.println("Enter ISBN :");
+            input = sc.nextLine();
+            ISBN = input;
+        }
+
+        Book b = new Book(title, author, publicationYear,ISBN);
         books.add(b);
     }
 
@@ -78,7 +130,7 @@ public class Bibliotheque {
         String newISBN = null;
 
         System.out.println("Modify title? (Y)es or (N)o");
-        String input = sc.nextLine();
+        String input = sc.nextLine().toUpperCase();
         if(Objects.equals(input, "Y")){
             System.out.println("Enter new title :");
             input = sc.nextLine();
@@ -86,7 +138,7 @@ public class Bibliotheque {
         }
 
         System.out.println("Modify author? (Y)es or (N)o");
-        input = sc.nextLine();
+        input = sc.nextLine().toUpperCase();
         if(Objects.equals(input, "Y")){
             System.out.println("Enter new author :");
             input = sc.nextLine();
@@ -94,7 +146,7 @@ public class Bibliotheque {
         }
 
         System.out.println("Modify publication year? (Y)es or (N)o");
-        input = sc.nextLine();
+        input = sc.nextLine().toUpperCase();
         if(Objects.equals(input, "Y")){
             System.out.println("Enter new publication year :");
             input = sc.nextLine();
@@ -102,7 +154,7 @@ public class Bibliotheque {
         }
 
         System.out.println("Modify ISBN? (Y)es or (N)o");
-        input = sc.nextLine();
+        input = sc.nextLine().toUpperCase();
         if(Objects.equals(input, "Y")){
             System.out.println("Enter new ISBN :");
             input = sc.nextLine();
@@ -126,16 +178,16 @@ public class Bibliotheque {
     }
 
     public void getBookInfo(Book b){
-        System.out.printf("| ------------------------------------------------------------------------------------------------------------- |%n");
-        System.out.printf("| %-109s |", "INFORMATION ON " + b.toString());
+        System.out.printf("| ----------------------------------------------------------------------------------------------------------------------------------------- |%n");
+        System.out.printf("| %-137s |", "INFORMATION ON BOOK WITH ID " + b.toString());
         System.out.println(" ");
-        System.out.printf("| ------------------------------------------------------------------------------------------------------------- |%n");
+        System.out.printf("| ----------------------------------------------------------------------------------------------------------------------------------------- |%n");
         System.out.printf("| %-25s | %-25s | %-25s | %-25s |", "TITLE", "AUTHOR", "PUBLICATION", "ISBN");
         System.out.println(" ");
-        System.out.printf("| ------------------------------------------------------------------------------------------------------------- |%n");
+        System.out.printf("| ----------------------------------------------------------------------------------------------------------------------------------------- |%n");
         System.out.printf("| %-25s | %-25s | %-25s | %-25s |", b.getTitle(), b.getAuthor(), String.valueOf(b.getPublicationYear()), b.getISBN());
         System.out.println(" ");
-        System.out.printf("| ------------------------------------------------------------------------------------------------------------- |%n");
+        System.out.printf("| ----------------------------------------------------------------------------------------------------------------------------------------- |%n");
     }
 
     public void borrowBook(Book b){
@@ -154,18 +206,18 @@ public class Bibliotheque {
 
     public void getAvailableBooks(){
         System.out.println(" ");
-        System.out.printf("| ------------------------------------------------------------------------------------------------------------- |%n");
-        System.out.printf("| %-109s |", "LIST OF AVAILABLE BOOKS");
+        System.out.printf("| ----------------------------------------------------------------------------------------------------------------------------------------- |%n");
+        System.out.printf("| %-137s |", "LIST OF AVAILABLE BOOKS");
         System.out.println(" ");
-        System.out.printf("| ------------------------------------------------------------------------------------------------------------- |%n");
-        System.out.printf("| %-25s | %-25s | %-25s | %-25s |", "TITLE", "AUTHOR", "PUBLICATION", "ISBN");
+        System.out.printf("| ----------------------------------------------------------------------------------------------------------------------------------------- |%n");
+        System.out.printf("| %-25s | %-25s | %-25s | %-25s | %-25s |", "BOOK ID", "TITLE", "AUTHOR", "PUBLICATION", "ISBN");
         System.out.println(" ");
-        System.out.printf("| ------------------------------------------------------------------------------------------------------------- |%n");
+        System.out.printf("| ----------------------------------------------------------------------------------------------------------------------------------------- |%n");
         for (Book b : availableBooks) {
-            System.out.printf("| %-25s | %-25s | %-25s | %-25s |", b.getTitle(), b.getAuthor(), String.valueOf(b.getPublicationYear()), b.getISBN());
+            System.out.printf("| %-25s | %-25s | %-25s | %-25s | %-25s |", b.toString(), b.getTitle(), b.getAuthor(), String.valueOf(b.getPublicationYear()), b.getISBN());
             System.out.println(" ");
         }
-        System.out.printf("| ------------------------------------------------------------------------------------------------------------- |%n");
+        System.out.printf("| ----------------------------------------------------------------------------------------------------------------------------------------- |%n");
         System.out.println(" ");
     }
 

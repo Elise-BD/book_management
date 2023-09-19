@@ -26,15 +26,65 @@ public class Main {
 
         // test functions
         //library.getBookInfo(book1);
-        //library.getAvailableBooks();
         //library.borrowBook(book1);
-        //library.getAvailableBooks();
         //library.modifyBookInfo(book1);
         //library.getAvailableBooks();
 
         // Run library
         if (library.login()) {
-            library.menu();
+
+            boolean again = true;
+            do {
+
+                String choice = library.menu();
+                switch (choice) {
+                    case "1": {
+                        library.getAvailableBooks();
+                        break;
+                    }
+                    case "2": {
+                        library.borrowBook(library.defineBook());
+                        break;
+                    }
+                    case "3": {
+                        library.returnBook(library.defineBook());
+                        break;
+                    }
+                    case "4": {
+                        library.getBookInfo(library.defineBook());
+                        break;
+                    }
+                    case "5": {
+                        if (library.isAdmin()) {
+                            library.addBook();
+                        }
+                        ;
+                        break;
+                    }
+                    case "6": {
+                        if (library.isAdmin()) {
+                            library.modifyBookInfo(library.defineBook());
+                        }
+                        ;
+                        break;
+                    }
+                    case "7": {
+                        if (library.isAdmin()) {
+                            library.deleteBook(library.defineBook());
+                        }
+                        ;
+                        break;
+                    }
+                    case "8": {
+                        System.out.println("Goodbye.");
+                        again = false;
+                        break;
+                    }
+                    default: {
+                        System.out.println("No valid input.");
+                    }
+                }
+            } while(again);
         }
 
     }
