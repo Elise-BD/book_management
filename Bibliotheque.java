@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -8,10 +9,45 @@ public class Bibliotheque {
     private ArrayList<Book> availableBooks = books;
     private ArrayList<Book> borrowedBooks = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
+    private HashMap<String,String> authentification = new HashMap<String, String>();
     Scanner sc = new Scanner(System.in);
+    User currentUser;
 
 
-    public void login(){}
+    public void login(){
+
+        boolean loginOK = false;
+        boolean passwOK = false;
+
+        while(!loginOK){
+            System.out.println("- Welcome to the library's book management system. -");
+            System.out.println("Enter login : ");
+            String login = sc.nextLine();
+            for (User u : users) {
+                if (Objects.equals(login, u.getLogin())) {
+                    currentUser = u;
+                    loginOK = true;
+                    break;
+                } else {
+                    System.out.println("Login does not exist !");
+                    break;
+                }
+            }
+
+            if(loginOK) {
+                while (!passwOK) {
+                    System.out.println("Enter password : ");
+                    String password = sc.nextLine();
+                    if (Objects.equals(password, currentUser.getPassword())) {
+                        passwOK = true;
+                        System.out.println("- Authentification successfull -");
+                    } else {
+                        System.out.println("Incorrect password !");
+                    }
+                }
+            }
+        }
+    }
     public void addBook(Book b){
         books.add(b);
     }
@@ -21,6 +57,8 @@ public class Bibliotheque {
     }
 
     public void modifyBookInfo(Book b){
+
+        //provide modifications
         String newTitle = null;
         String newAuthor = null;
         int newPublicationYear = 0;
@@ -58,11 +96,19 @@ public class Bibliotheque {
             newISBN = input;
         }
 
-        b.setTitle(newTitle);
-        b.setAuthor(newAuthor);
-        b.setPublicationYear(newPublicationYear);
-        b.setISBN(newISBN);
-
+        // update book info
+        if(newTitle != null) {
+            b.setTitle(newTitle);
+        }
+        if(newAuthor != null) {
+            b.setAuthor(newAuthor);
+        }
+        if(newPublicationYear != 0) {
+            b.setPublicationYear(newPublicationYear);
+        }
+        if(newISBN != null) {
+            b.setISBN(newISBN);
+        }
         System.out.println("- Modifications saved -");
     }
 

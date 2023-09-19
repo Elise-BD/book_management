@@ -23,9 +23,14 @@ public class Main {
         library.getUsers().add(user2);
         library.getUsers().add(user3);
 
-        library.getBookInfo(book1);
-        library.getAvailableBooks();
-        library.borrowBook(book1);
-        library.getAvailableBooks();
+
+        // test functions
+        //library.getBookInfo(book1);
+        //library.getAvailableBooks();
+        //library.borrowBook(book1);
+        //library.getAvailableBooks();
+        //library.modifyBookInfo(book1);
+        //library.getAvailableBooks();
+        library.login();
     }
 }
