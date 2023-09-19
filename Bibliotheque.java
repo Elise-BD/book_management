@@ -9,18 +9,28 @@ public class Bibliotheque {
     private ArrayList<Book> availableBooks = books;
     private ArrayList<Book> borrowedBooks = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
-    private HashMap<String,String> authentification = new HashMap<String, String>();
     Scanner sc = new Scanner(System.in);
     User currentUser;
 
 
-    public void login(){
+    public void menu(){
+        System.out.println("- Welcome to the library's book management system -");
+        System.out.println("(1) Get list of available books");
+        System.out.println("(2) Borrow a book");
+        System.out.println("(3) Return a book");
+        System.out.println("(4) Get book information");
+        System.out.println("(5) Admin/ Add a book");
+        System.out.println("(6) Admin/ Modify a book's information");
+        System.out.println("(7) Admin/ Delete a book");
+        System.out.println("(8) Quit");
+    }
+    public boolean login(){
 
         boolean loginOK = false;
         boolean passwOK = false;
 
         while(!loginOK){
-            System.out.println("- Welcome to the library's book management system. -");
+
             System.out.println("Enter login : ");
             String login = sc.nextLine();
             for (User u : users) {
@@ -41,13 +51,16 @@ public class Bibliotheque {
                     if (Objects.equals(password, currentUser.getPassword())) {
                         passwOK = true;
                         System.out.println("- Authentification successfull -");
+                        return true;
                     } else {
                         System.out.println("Incorrect password !");
                     }
                 }
             }
         }
+        return false;
     }
+
     public void addBook(Book b){
         books.add(b);
     }

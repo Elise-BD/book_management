@@ -31,6 +31,11 @@ public class Main {
         //library.getAvailableBooks();
         //library.modifyBookInfo(book1);
         //library.getAvailableBooks();
-        library.login();
+
+        // Run library
+        if (library.login()) {
+            library.menu();
+        }
+
     }
 }
