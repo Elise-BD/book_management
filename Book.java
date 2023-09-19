@@ -6,6 +6,26 @@ public class Book {
     private int publicationYear;
     private String ISBN;
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
     public String getTitle() {
         return title;
     }
