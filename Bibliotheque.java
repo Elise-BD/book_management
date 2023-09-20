@@ -14,7 +14,7 @@ public class Bibliotheque {
 
 
     public String menu(){
-        System.out.println("- Welcome to the library's book management system -");
+        System.out.println("-------------- MENU ---------------");
         System.out.println("(1) Get list of available books");
         System.out.println("(2) Borrow a book");
         System.out.println("(3) Return a book");
@@ -63,7 +63,7 @@ public class Bibliotheque {
     public boolean isAdmin(){
         return Objects.equals(String.valueOf(currentUser.getRole()), "ADMIN");
     }
-    public Book defineBook(){
+    public Book defineBookToBorrow(){
         System.out.println("Which book would you like to borrow ? Enter book ID :");
         String input = sc.nextLine();
         for (Book b : availableBooks) {
@@ -71,9 +71,34 @@ public class Bibliotheque {
                 return b;
             }
         }
-        System.out.println("Wrong input for book ID !");
+        System.out.println("Wrong input for book ID (or book is not available) !");
         return null;
     }
+
+    public Book defineBookToReturn(){
+        System.out.println("Which book are you returning ? Enter book ID :");
+        String input = sc.nextLine();
+        for (Book b : borrowedBooks) {
+            if(Objects.equals(input, b.toString())){
+                return b;
+            }
+        }
+        System.out.println("Wrong input for book ID (or book has already been returned) !");
+        return null;
+    }
+
+    public Book defineBook(){
+        System.out.println("Which book is concerned ? Enter book ID :");
+        String input = sc.nextLine();
+        for (Book b : books) {
+            if(Objects.equals(input, b.toString())){
+                return b;
+            }
+        }
+        System.out.println("Wrong input for book ID (or book has already been returned) !");
+        return null;
+    }
+
     public void addBook(){
 
         String title = null;
@@ -115,10 +140,12 @@ public class Bibliotheque {
 
         Book b = new Book(title, author, publicationYear,ISBN);
         books.add(b);
+        System.out.println("- Add complete -");
     }
 
     public void deleteBook(Book b){
         books.remove(b);
+        System.out.println("- Delete complete -");
     }
 
     public void modifyBookInfo(Book b){
@@ -194,14 +221,14 @@ public class Bibliotheque {
         borrowedBooks.add(b);
         availableBooks.remove(b);
 
-        System.out.println(b.getTitle() + " is now borrowed.");
+        System.out.println("\"" + b.getTitle() + "\" is now borrowed.");
     }
 
     public void returnBook(Book b){
         availableBooks.add(b);
         borrowedBooks.remove(b);
 
-        System.out.println(b.getTitle() + " has been returned.");
+        System.out.println("\"" + b.getTitle() + "\" has been returned.");
     }
 
     public void getAvailableBooks(){

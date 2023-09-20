@@ -43,11 +43,11 @@ public class Main {
                         break;
                     }
                     case "2": {
-                        library.borrowBook(library.defineBook());
+                        library.borrowBook(library.defineBookToBorrow());
                         break;
                     }
                     case "3": {
-                        library.returnBook(library.defineBook());
+                        library.returnBook(library.defineBookToReturn());
                         break;
                     }
                     case "4": {
